@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo } from './store/action-creators/todo';
+import { RootState } from './store/store';
+
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch();
+    const todos = useSelector((state: RootState) => state.todos);
+
+    const handleAddTodo = () => {
+        const todoObj = {
+            id: 1,
+            text: 'John'
+        };
+        dispatch(addTodo(todoObj));
+    };
+    return (
+        <div className="App">
+            Hello There
+            <button onClick={handleAddTodo}>Add Todo</button>
+            {Array.isArray(todos.list) && todos.list.map((item, index) => <li key={index}>{item.text}</li>)}
+        </div>
+    );
 }
 
 export default App;
